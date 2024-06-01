@@ -1,0 +1,71 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Email Detector</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light grey background */
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px; /* Set maximum width for better readability */
+            margin: auto; /* Center the content */
+            background-color: #fff; /* White background for the form */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Add shadow for depth effect */
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        /* Form styling */
+        .form-group label {
+            font-weight: bold;
+        }
+        .btn-primary {
+            width: 100%; /* Make button full width */
+        }
+        /* Prediction styling */
+        .prediction {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .safe {
+            color: green;
+        }
+        .phishing {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Phishing Email Detector</h1>
+        <form method="post">
+            {% csrf_token %}
+            <!-- Use Bootstrap form styling -->
+            <div class="form-group">
+                <label for="email"></label>
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg mt-3">Check Email</button>
+        </form>
+        {% if prediction is not None %}
+            <div class="prediction alert alert-success mt-4" role="alert">
+                <h3 class="{% if prediction == 'Safe Email' %}safe{% else %}phishing{% endif %}">
+                    Prediction: {{ prediction }}
+                </h3>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
